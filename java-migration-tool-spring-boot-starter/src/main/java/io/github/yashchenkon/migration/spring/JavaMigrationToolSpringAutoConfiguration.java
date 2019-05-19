@@ -7,11 +7,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.github.yashchenkon.migration.Migration;
-import io.github.yashchenkon.migration.MigrationTask;
-import io.github.yashchenkon.migration.registry.MigrationRegistry;
-import io.github.yashchenkon.migration.registry.SimpleMigrationRegistry;
-import io.github.yashchenkon.migration.repository.MigrationRepository;
+import io.github.yashchenkon.migration.core.model.Migration;
+import io.github.yashchenkon.migration.core.MigrationTask;
+import io.github.yashchenkon.migration.core.registry.SimpleMigrationRegistry;
+import io.github.yashchenkon.migration.core.lock.MigrationLock;
+import io.github.yashchenkon.migration.core.registry.MigrationRegistry;
+import io.github.yashchenkon.migration.core.repository.MigrationRepository;
 
 /**
  * @author Mykola Yashchenko
@@ -23,8 +24,9 @@ public class JavaMigrationToolSpringAutoConfiguration {
     @Bean(initMethod = "run")
     @ConditionalOnMissingBean(MigrationTask.class)
     public MigrationTask migrationTask(MigrationRepository migrationRepository,
-                                       MigrationRegistry migrationRegistry) {
-        return new MigrationTask(migrationRepository, migrationRegistry);
+                                       MigrationRegistry migrationRegistry,
+                                       MigrationLock migrationLock) {
+        return new MigrationTask(migrationRepository, migrationRegistry, migrationLock);
     }
 
     @Bean

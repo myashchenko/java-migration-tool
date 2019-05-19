@@ -1,15 +1,13 @@
-package io.github.yashchenkon.migration.registry;
+package io.github.yashchenkon.migration.core.registry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.github.yashchenkon.migration.Migration;
-import io.github.yashchenkon.migration.exception.MigrationException;
-import io.github.yashchenkon.migration.version.Version;
+import io.github.yashchenkon.migration.core.model.Migration;
+import io.github.yashchenkon.migration.core.version.Version;
 
 /**
  * @author Mykola Yashchenko
@@ -23,7 +21,9 @@ public class SimpleMigrationRegistry implements MigrationRegistry {
     }
 
     public SimpleMigrationRegistry(List<Migration> migrations) {
-        this.migrations = new ArrayList<>(migrations);
+        this.migrations = migrations.stream()
+                .sorted(Comparator.comparing(Migration::version))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class SimpleMigrationRegistry implements MigrationRegistry {
                 .stream()
                 .map(Migration::version)
                 .max(Comparator.naturalOrder())
-                .orElseThrow(MigrationException::new);
+                .orElse(null);
     }
 
     @Override
@@ -44,11 +44,8 @@ public class SimpleMigrationRegistry implements MigrationRegistry {
     }
 
     @Override
-    public List<Migration> migrationsUntil(Version version) {
-        return migrations
-                .stream()
-                .filter(migration -> migration.version().compareTo(version) <= 0)
-                .collect(Collectors.toList());
+    public List<Migration> migrations() {
+        return new ArrayList<>(migrations);
     }
 
 }

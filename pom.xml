@@ -12,6 +12,7 @@
     <modules>
         <module>java-migration-tool</module>
         <module>java-migration-tool-spring-boot-starter</module>
+        <module>java-migration-tool-datastore</module>
     </modules>
 
     <description>

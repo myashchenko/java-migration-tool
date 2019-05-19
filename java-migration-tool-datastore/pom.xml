@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>java-migration-tool-parent</artifactId>
+        <groupId>io.github.yashchenkon</groupId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>java-migration-tool-datastore</artifactId>
+    <packaging>jar</packaging>
+    <name>Java Migration Tool Datastore Integration</name>
+    <url>https://github.com/YashchenkoN/java-migration-tool</url>
+
+    <description>
+        This module integrates the Datastore into Java Migration Tool.
+    </description>
+
+    <properties>
+        <datastore.version>1.74.0</datastore.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.yashchenkon</groupId>
+            <artifactId>java-migration-tool</artifactId>
+            <version>${version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-datastore</artifactId>
+            <version>${datastore.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

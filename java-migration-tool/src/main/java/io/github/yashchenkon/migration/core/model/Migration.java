@@ -1,6 +1,6 @@
-package io.github.yashchenkon.migration;
+package io.github.yashchenkon.migration.core.model;
 
-import io.github.yashchenkon.migration.version.Version;
+import io.github.yashchenkon.migration.core.version.Version;
 
 /**
  * @author Mykola Yashchenko

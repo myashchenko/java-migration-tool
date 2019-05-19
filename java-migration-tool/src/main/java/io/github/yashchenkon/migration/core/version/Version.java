@@ -1,12 +1,12 @@
-package io.github.yashchenkon.migration.version;
+package io.github.yashchenkon.migration.core.version;
 
 /**
  * @author Mykola Yashchenko
  */
 public interface Version extends Comparable<Version> {
-    int value();
+    String value();
 
     default int compareTo(Version o) {
-        return value() - o.value();
+        return value().compareTo(o.value());
     }
 }
