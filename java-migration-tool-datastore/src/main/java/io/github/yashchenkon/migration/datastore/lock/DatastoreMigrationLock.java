@@ -46,7 +46,7 @@ public class DatastoreMigrationLock implements MigrationLock {
             LOGGER.info("Datastore lock has been successfully acquired");
         } catch (DatastoreException e) {
             LOGGER.info("Failed to acquire Datastore lock: {}", e.getMessage());
-            throw new MigrationLockException("Failed to get migration lock");
+            throw new MigrationLockException("Failed to acquire migration lock");
         }
     }
 
