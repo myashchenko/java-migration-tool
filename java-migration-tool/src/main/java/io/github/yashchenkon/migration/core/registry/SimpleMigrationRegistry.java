@@ -37,6 +37,10 @@ public class SimpleMigrationRegistry implements MigrationRegistry {
 
     @Override
     public List<Migration> migrationsSince(Version version) {
+        if (version == null) {
+            return migrations;
+        }
+
         return migrations
                 .stream()
                 .filter(migration -> migration.version().compareTo(version) > 0)

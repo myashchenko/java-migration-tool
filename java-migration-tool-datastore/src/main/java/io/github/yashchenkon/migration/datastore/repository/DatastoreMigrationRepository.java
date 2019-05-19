@@ -69,7 +69,7 @@ public class DatastoreMigrationRepository implements MigrationRepository {
         List<Version> appliedVersions = new ArrayList<>();
         while (queryResults.hasNext()) {
             Entity entity = queryResults.next();
-            appliedVersions.add(new SimpleVersion(entity.getString("version")));
+            appliedVersions.add(new SimpleVersion(entity.getKey().getName()));
         }
 
         return appliedVersions

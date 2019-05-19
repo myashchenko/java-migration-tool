@@ -82,6 +82,10 @@ public class MigrationTask {
             }
         }
 
+        if (currentVersion == null) {
+            return;
+        }
+
         for (Migration migration : migrations) {
             if (migration.version().compareTo(currentVersion) < 0) {
                 appliedVersions.stream()
