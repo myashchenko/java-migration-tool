@@ -5,7 +5,7 @@
     <parent>
         <artifactId>java-migration-tool-parent</artifactId>
         <groupId>io.github.yashchenkon</groupId>
-        <version>0.0.1</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>java-migration-tool</artifactId>
