@@ -4,7 +4,7 @@
 
     <groupId>io.github.yashchenkon</groupId>
     <artifactId>java-migration-tool-parent</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.5</version>
     <packaging>pom</packaging>
     <name>Java Migration Tool Parent</name>
     <url>https://github.com/YashchenkoN/java-migration-tool</url>
@@ -32,7 +32,7 @@
         <url>https://github.com/YashchenkoN/java-migration-tool</url>
         <connection>scm:git:https://github.com/YashchenkoN/java-migration-tool.git</connection>
         <developerConnection>scm:git:https://github.com/YashchenkoN/java-migration-tool.git</developerConnection>
-        <tag>java-migration-tool-${version}</tag>
+        <tag>java-migration-tool-parent-0.0.5</tag>
     </scm>
 
     <distributionManagement>
