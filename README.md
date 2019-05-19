@@ -1,6 +1,6 @@
 # Java Migration Tool
 
-[![Build Status](https://travis-ci.org/YashchenkoN/assertsqlcount.svg?branch=master)](https://travis-ci.org/YashchenkoN/assertsqlcount)
+[![Build Status](https://travis-ci.org/YashchenkoN/java-migration-toole.svg?branch=master)](https://travis-ci.org/YashchenkoN/java-migration-tool)
 
 Simple tool allowing managing DB schema / static (reference) data via Java Code.
 
