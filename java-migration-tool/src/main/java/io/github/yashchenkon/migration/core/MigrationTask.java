@@ -2,7 +2,9 @@ package io.github.yashchenkon.migration.core;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +46,7 @@ public class MigrationTask {
             return;
         }
 
-        assertMigrations();
+        verifyMigrations(currentVersion);
 
         if (currentVersion != null && currentVersion.value().equals(latestVersionToApply.value())) {
             LOGGER.info("Skipping migration task - all migrations are applied already");
@@ -56,6 +58,7 @@ public class MigrationTask {
 
             migrationRegistry.migrationsSince(currentVersion)
                     .forEach(migration -> {
+                        LOGGER.info("Migrating to version {}", migration.version());
                         migration.execute();
                         migrationRepository.apply(migration);
                     });
@@ -64,17 +67,40 @@ public class MigrationTask {
         }
     }
 
-    private void assertMigrations() {
+    private void verifyMigrations(Version currentVersion) {
         List<Version> appliedVersions = migrationRepository.appliedVersions();
         List<Migration> migrations = migrationRegistry.migrations();
+
+        verifyDuplicates(migrations);
 
         Map<String, Migration> migrationByVersion = migrations.stream()
                 .collect(toMap(migration -> migration.version().value(), Function.identity()));
 
         for (Version appliedVersion : appliedVersions) {
             if (!migrationByVersion.containsKey(appliedVersion.value())) {
-                throw new MigrationException("Can't find migration " + appliedVersion.value() + " in the code");
+                throw new MigrationException("Version " + appliedVersion.value() + " is already applied while it doesn't exists in the code");
             }
+        }
+
+        for (Migration migration : migrations) {
+            if (migration.version().compareTo(currentVersion) < 0) {
+                appliedVersions.stream()
+                        .filter(version -> migration.version().value().equals(version.value()))
+                        .findFirst()
+                        .orElseThrow(() -> new MigrationException("Migration " + migration.getClass() + " has lower version than the latest applied migration. " +
+                                "Its version " + migration.version().value() + " while latest version " + currentVersion.value()));
+            }
+        }
+    }
+
+    private void verifyDuplicates(List<Migration> migrations) {
+        Set<String> versions = migrations
+                .stream()
+                .map(migration -> migration.version().value())
+                .collect(Collectors.toSet());
+
+        if (migrations.size() != versions.size()) {
+            throw new MigrationException("There are migrations with identical versions");
         }
     }
 }
